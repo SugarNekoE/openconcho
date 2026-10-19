@@ -1,3 +1,10 @@
+## [0.17.1](https://github.com/offendingcommit/openconcho/compare/v0.17.0...v0.17.1) (2026-10-19)
+
+
+### Bug Fixes
+
+* **web:** respect Vite base in dev API proxy ([360b0af](https://github.com/offendingcommit/openconcho/commit/360b0af7f3ef22083f48fd66d16256b8cc7e3e58))
+
 # [0.17.0](https://github.com/offendingcommit/openconcho/compare/v0.16.2...v0.17.0) (2026-10-05)
 
 
