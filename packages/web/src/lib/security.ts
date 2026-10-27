@@ -23,16 +23,3 @@ export function isSafeExternalUrl(value: string): boolean {
 	const parsed = parseUrl(value);
 	return parsed?.protocol === "https:" || parsed?.protocol === "http:";
 }
-
-export function isSecureTokenTransport(baseUrl: string): boolean {
-	const parsed = parseUrl(baseUrl);
-	if (!parsed) return false;
-	if (parsed.protocol === "https:") return true;
-	if (parsed.protocol === "http:" && LOOPBACK_HOSTS.has(parsed.hostname.toLowerCase())) return true;
-	return false;
-}
-
-export function tokenTransportError(baseUrl: string): string | null {
-	if (isSecureTokenTransport(baseUrl)) return null;
-	return "API tokens require HTTPS unless connecting to localhost.";
-}

@@ -24,7 +24,6 @@ import {
 	isCloudInstance,
 } from "@/lib/config";
 import { COLOR } from "@/lib/constants";
-import { tokenTransportError } from "@/lib/security";
 
 export type ConnectionPreset = "cloud" | "self-hosted";
 
@@ -82,13 +81,6 @@ export function SettingsForm({
 	async function handleTest() {
 		setChecking(true);
 		setHealth({ status: "checking", message: "Connecting..." });
-		const transportError = token.trim() ? tokenTransportError(baseUrl) : null;
-		if (transportError) {
-			setErrors({ baseUrl: transportError });
-			setHealth({ status: "unreachable", message: transportError });
-			setChecking(false);
-			return;
-		}
 		const result = await checkConnection(baseUrl, token || undefined);
 		setHealth(result);
 		setChecking(false);
@@ -118,11 +110,6 @@ export function SettingsForm({
 		}
 		if (isCloud && !token.trim()) {
 			setErrors({ token: "API key is required for Honcho Cloud" });
-			return;
-		}
-		const transportError = token.trim() ? tokenTransportError(result.data.baseUrl) : null;
-		if (transportError) {
-			setErrors({ baseUrl: transportError });
 			return;
 		}
 		setErrors({});
