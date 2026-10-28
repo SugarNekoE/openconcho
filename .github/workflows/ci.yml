@@ -20,7 +20,14 @@ jobs:
   release:
     name: Release
     needs: [check]
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    # Only the canonical repository can release: publishing needs the
+    # RELEASE_TOKEN PAT, and .releaserc.json points repositoryUrl at
+    # offendingcommit/openconcho. Forks have neither, so they skip instead of
+    # failing on `actions/checkout` with an empty token.
+    if: >-
+      github.event_name == 'push' &&
+      github.ref == 'refs/heads/main' &&
+      github.repository == 'offendingcommit/openconcho'
     runs-on: ubuntu-latest
     permissions:
       contents: write
